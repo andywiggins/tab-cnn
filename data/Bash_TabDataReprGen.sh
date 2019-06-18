@@ -1,1 +1,1 @@
-nohup python Parallel_TabDataReprGen.py > ../logs/TabDataReprGen.out &
+nohup python Parallel_TabDataReprGen.py &
