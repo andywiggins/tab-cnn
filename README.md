@@ -1,6 +1,6 @@
 # tab-cnn
 
-**Guitar Tablature Estimation with a Convolutional Neural Network**
+### Guitar Tablature Estimation with a Convolutional Neural Network
 
 ###### This code supports the paper "Guitar Tablature Estimation with a Convolutional Neural Network" that will be presented at the 20th Conference of the International Society for Music Information Retreival (ISMIR 2019).
 
