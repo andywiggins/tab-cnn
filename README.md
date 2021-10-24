@@ -8,7 +8,7 @@ To visualize the system performance, `tab-cnn/demos/` contains video demonstrati
 
 ### 0. Requirements
 
-This project was made to be run with Python 2.7. You should have the following libraries/packages installed:
+This project was made to be run with Python 3.9.7. You should have the following libraries/packages installed:
 * numpy
 * scipy
 * pandas
@@ -16,6 +16,8 @@ This project was made to be run with Python 2.7. You should have the following l
 * librosa
 * keras
 * tensorflow
+
+```pip install -r requirements.txt```
 
 ### 1. Download dataset
 
