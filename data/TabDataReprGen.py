@@ -4,7 +4,7 @@ import jams
 from scipy.io import wavfile
 import sys
 import librosa
-from keras.utils import to_categorical
+from tensorflow.keras.utils import to_categorical
 
 class TabDataReprGen:
     
@@ -126,7 +126,7 @@ class TabDataReprGen:
         elif self.preproc_mode == "s":
             data = np.abs(librosa.stft(data, n_fft=self.n_fft, hop_length=self.hop_length))
         else:
-            print "invalid representation mode."
+            print("invalid representation mode.")
 
         return data
 
@@ -136,22 +136,23 @@ class TabDataReprGen:
     def get_nth_filename(self, n):
         # returns the filename with no extension
         filenames = np.sort(np.array(os.listdir(self.path_anno)))
-        filenames = filter(lambda x: x[-5:] == ".jams", filenames)
+        filenames = list(filter(lambda x: x[-5:] == ".jams", filenames))
+        print(n)
         return filenames[n][:-5] 
     
     def load_and_save_repr_nth_file(self, n):
         # filename has no extenstion
         filename = self.get_nth_filename(n)
         num_frames = self.load_rep_and_labels_from_raw_file(filename)
-        print "done: " + filename + ", " + str(num_frames) + " frames" 
+        print("done: " + filename + ", " + str(num_frames) + " frames")
         save_path = self.save_path
         if not os.path.exists(save_path):
             os.makedirs(save_path)
         self.save_data(save_path + filename + ".npz")
         
-def main(args):
-    n = args[0]
-    m = args[1]
+def main(arg1, arg2):
+    n = arg1
+    m = arg2    
     gen = TabDataReprGen(mode=m)
     gen.load_and_save_repr_nth_file(n)
     

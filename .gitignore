@@ -1,0 +1,9 @@
+data/Bash_TabDataReprGen.sh
+.vscode
+data/__pycache__/TabDataReprGen.cpython-39.pyc
+data/GuitarSet
+data/spec_repr
+model/__pycache__
+model/saved
+data/nohup.out
+nohup.out

@@ -14,6 +14,7 @@ import pandas as pd
 import numpy as np
 import datetime
 from Metrics import *
+import tensorflow as tf
 
 class TabCNN:
     
@@ -22,9 +23,9 @@ class TabCNN:
                  epochs=8,
                  con_win_size = 9,
                  spec_repr="c",
-                 data_path="../data/spec_repr/",
+                 data_path="./data/spec_repr/",
                  id_file="id.csv",
-                 save_path="saved/"):   
+                 save_path="./model/saved/"):   
         
         self.batch_size = batch_size
         self.epochs = epochs
@@ -36,7 +37,7 @@ class TabCNN:
         
         self.load_IDs()
         
-        self.save_folder = self.save_path + self.spec_repr + " " + datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "/"
+        self.save_folder = self.save_path + self.spec_repr + " " + datetime.datetime.now().strftime("%Y-%m-%d %H%M%S") + "/"
         if not os.path.exists(self.save_folder):
             os.makedirs(self.save_folder)
         self.log_file = self.save_folder + "log.txt"
@@ -141,7 +142,7 @@ class TabCNN:
         model.add(Activation(self.softmax_by_string))
 
         model.compile(loss=self.catcross_by_string,
-                      optimizer=keras.optimizers.Adadelta(),
+                      optimizer=tf.keras.optimizers.Adadelta(),
                       metrics=[self.avg_acc])
         
         self.model = model
@@ -188,25 +189,25 @@ class TabCNN:
 ##################################
 ########### EXPERIMENT ###########
 ##################################
+if __name__ == '__main__':
+    tabcnn = TabCNN()
 
-tabcnn = TabCNN()
-
-print("logging model...")
-tabcnn.build_model()
-tabcnn.log_model()
-
-for fold in range(6):
-    print("\nfold " + str(fold))
-    tabcnn.partition_data(fold)
-    print("building model...")
+    print("logging model...")
     tabcnn.build_model()
-    print("training...")
-    tabcnn.train()
-    tabcnn.save_weights()
-    print("testing...")
-    tabcnn.test()
-    tabcnn.save_predictions()
-    print("evaluation...")
-    tabcnn.evaluate()
-print("saving results...")
-tabcnn.save_results_csv()
+    tabcnn.log_model()
+
+    for fold in range(6):
+        print("\nfold " + str(fold))
+        tabcnn.partition_data(fold)
+        print("building model...")
+        tabcnn.build_model()  
+        print("training...")
+        tabcnn.train()
+        tabcnn.save_weights()
+        print("testing...")
+        tabcnn.test()
+        tabcnn.save_predictions()
+        print("evaluation...")
+        tabcnn.evaluate()
+    print("saving results...")
+    tabcnn.save_results_csv()
